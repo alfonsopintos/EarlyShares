@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get 'users/new'
 
+  resources :users
+
   resources :projects
 
   # The priority is based upon order of creation: first created -> highest priority.
