@@ -4,4 +4,14 @@ class User < ActiveRecord::Base
 	validates :phone_number, length: { is: 10 }
 	validates :phone_number, :numericality => {:only_integer => true}
 	validates :name, presence: true
+
+
+	def self.current
+    	Thread.current[:user]
+  	end
+  	
+  	def self.current=(user)
+    	Thread.current[:user] = user
+  	end
+
 end

@@ -1,6 +1,9 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
+  before_filter :require_user # require_user will set the current_user in controllers
+  before_filter :set_current_user
+
   # GET /projects
   # GET /projects.json
   def index
