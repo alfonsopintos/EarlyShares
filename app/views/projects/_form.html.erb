@@ -10,10 +10,13 @@
       </ul>
     </div>
   <% end %>
-
+<div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
   <div class="field">
     <%= f.label :status %><br>
-    <%= f.text_field :status %>
+    <%= f.select :status, [["New", "new"], ["Approved", "approved"], ["Pre-Funding", "Pre-Funding"], ["Funded", "Funded"]] %>
   </div>
   <div class="actions">
     <%= f.submit %>
