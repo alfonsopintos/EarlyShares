@@ -8,7 +8,7 @@ def create
 
   if @user.save
   session[:user_id] = @user.id
-  redirect_to root_path, notice: "User Created"
+  redirect_to projects_path, notice: "User Created"
   else
   render action: 'new'
   end
