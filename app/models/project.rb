@@ -44,14 +44,14 @@ class Project < ActiveRecord::Base
 	    		 @errors.add(:self, "Connection Failed, Error Rescued")
 
 				return false
-
 		    end	 	
 		end
   	end
 
+
   	def hash
   	{'header' => { 
-		ref_id: 'random number', 
+		ref_id: rand, 
 		client: 'es_web', 
 		timestamp: Time.now, 
 		priority: 'normal', 
