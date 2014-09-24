@@ -62,7 +62,7 @@ class Project < ActiveRecord::Base
 		channel: "email", 
 		user_email: self.user.email, 
 		username: self.user.name, 
-		user_mobile: '73649283'}
+		user_mobile: self.user.phone_number}
 	}.to_json
 	end
 end
