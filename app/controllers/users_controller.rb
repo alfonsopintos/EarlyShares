@@ -18,7 +18,7 @@ def create
   private
   def user_params
   	params.
-  		require(:user).permit(:name, :password, :password_confirmation, :email, :phone_number)
+  		require(:user).permit(:name, :password, :password_confirmation, :email, :phone_number, :auth_token)
   end
   
 end
