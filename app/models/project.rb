@@ -55,7 +55,7 @@ class Project < ActiveRecord::Base
 		client: 'es_web', 
 		timestamp: Time.now, 
 		priority: 'normal', 
-		auth_token: '?', 
+		auth_token: self.user.auth_token, 
 		event_type: 'project_status_update'},
 	'body' => {
 		user_id: self.user_id, 
@@ -65,4 +65,5 @@ class Project < ActiveRecord::Base
 		user_mobile: self.user.phone_number}
 	}.to_json
 	end
+
 end

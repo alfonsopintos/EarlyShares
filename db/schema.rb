@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140924022256) do
+ActiveRecord::Schema.define(version: 20140924180248) do
 
   create_table "projects", force: true do |t|
     t.string   "status"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20140924022256) do
     t.string   "phone_number"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "auth_token"
   end
 
   add_index "users", ["name"], name: "index_users_on_name", unique: true
