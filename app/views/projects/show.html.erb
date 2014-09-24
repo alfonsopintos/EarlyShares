@@ -5,9 +5,23 @@
   <%= @project.name %>
 </p>
 <p>
+  <strong>Owner Name:</strong>
+  <%= @project.user.name %>
+</p>
+<p>
+  <strong>Owner Email:</strong>
+  <%= @project.user.email %>
+</p>
+<p>
+  <strong>Owner Phone Number:</strong>
+  <%= @project.user.phone_number %>
+</p>
+<p>
   <strong>Status:</strong>
   <%= @project.status %>
 </p>
+
+
 
 
 <%= link_to 'Edit', edit_project_path(@project) %> |
