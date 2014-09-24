@@ -4,31 +4,48 @@ class Project < ActiveRecord::Base
 	after_validation :send_rabbit 
 
 	belongs_to :user
+
+#Do not uncomment. This crashes new project form
+	# def initialize
+ #   	 @errors = ActiveModel::Errors.new(self)
+ #  	end
 	
 	def send_rabbit
 		if self.status == "Funding" 
-		    connection = Bunny.new(
-		    	:host => "tiger.cloudamqp.com", 
-		    	:vhost => "jnrczvil", 
-		    	:user => "jnrczvil", 
-		    	:password => "sIMlgcE-xekl1Fo5hEQEIApzaBtGP8tO")
-		    connection.start
+		    begin
+			    connection = Bunny.new(
+			    	:host => "tiger.cloudamqp.com", 
+			    	:vhost => "jnrczvil", 
+			    	:user => "jnrczvil", 
+			    	:password => "sIMlgcE-xekl1Fo5hEQEIApzaBtGP8tO",
+			    	:automatic_recovery => false)
+			    
+			    connection.start
+				
 
-		    channel = connection.create_channel
-		    queue = channel.queue("bunny", :auto_delete => true)
-		    exchange = channel.default_exchange
+			    channel = connection.create_channel
+			    queue = channel.queue("bunny", :auto_delete => true)
+			    exchange = channel.default_exchange
 
-		    queue.subscribe do |delivery_info, metadata, payload|
-		      puts "Recieved #{payload}"
-		      puts "delivery info: #{delivery_info}"
-		      puts "metadata: #{metadata}"
+			    queue.subscribe do |delivery_info, metadata, payload|
+			      puts "Recieved #{payload}"
+			      puts "delivery info: #{delivery_info}"
+			      puts "metadata: #{metadata}"
 
-		    end
+			    end
 
-		    exchange.publish(hash, :routing_key => queue.name)
+			    exchange.publish(hash, :routing_key => queue.name)
 
-		    sleep 1.0
-	    	connection.close
+			    sleep 1.0
+		    	connection.close
+
+	    	rescue Bunny::Exception => e
+
+	    		 @errors.add(:self, "Connection Failed, Error Rescued")
+
+				return false
+
+		    end	 	
 		end
   	end
 

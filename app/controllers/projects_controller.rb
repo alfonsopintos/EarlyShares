@@ -4,6 +4,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects
   # GET /projects.json
+
   def index
     @projects = Project.all
   end
@@ -46,7 +47,7 @@ class ProjectsController < ApplicationController
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
         format.json { render :show, status: :ok, location: @project }
       else
-        format.html { render :edit }
+        format.html { render :edit, notice: @project.errors }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
