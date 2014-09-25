@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
-  before_filter :authorize, only: [:edit, :update, :destroy]
+  before_filter :authorize, only: [:new, :edit, :update, :destroy, :create]
 
   # GET /projects
   # GET /projects.json
@@ -16,7 +16,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/new
   def new
-    @project = Project.new
+   @project = Project.new
   end
 
   # GET /projects/1/edit

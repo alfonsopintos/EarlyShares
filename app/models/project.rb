@@ -51,7 +51,7 @@ class Project < ActiveRecord::Base
 
   	def hash
   	{'header' => { 
-		ref_id: rand, 
+		ref_id: SecureRandom.uuid, 
 		client: 'es_web', 
 		timestamp: Time.now, 
 		priority: 'normal', 
