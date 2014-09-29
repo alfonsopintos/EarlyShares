@@ -1,6 +1,8 @@
 class Project < ActiveRecord::Base
 	require 'json'
 
+	validates :name, presence: true, length: { minimum: 3 }
+
 	after_validation :send_rabbit 
 
 	belongs_to :user
