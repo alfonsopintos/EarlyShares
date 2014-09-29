@@ -3,7 +3,7 @@ class Project < ActiveRecord::Base
 
 	validates :name, presence: true, length: { minimum: 3 }
 
-	after_validation :send_rabbit 
+	after_validation :send_rabbit, :if => :status_changed? 
 
 	belongs_to :user
 
