@@ -70,6 +70,22 @@ describe 'Editing projects when user signed in' do
 
 	end
 
+	it 'publishes to rabbitmq when project status moves to funding' do
+		sign_in_and_create_project
+		project = Project.last
+		expect(page).to have_content("successfully created")
+		expect(Project.count).to eq(1)
+		visit "/"
+		expect(page).to have_content("Listing projects")
+		click_on "Edit"
+		expect(page).to have_content("Editing project")
+		select ("Funding"), from: 'Status'
+		click_on "Update Project"
+		expect(page).to have_content("successfully updated")
+		expect(project.status).to eq("Funding")
+
+	end
+
 end	
 
 
