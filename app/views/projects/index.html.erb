@@ -12,7 +12,7 @@
 
   <tbody>
     <% @projects.each do |project| %>
-      <tr>
+      <tr id="<%= dom_id(project) %>">
         <td><%= project.name %></td>
         <td><%= project.status %></td>
         <td><%= project.user.name %></td>
