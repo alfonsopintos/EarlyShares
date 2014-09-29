@@ -79,10 +79,12 @@ describe 'Editing projects when user signed in' do
 		expect(page).to have_content("Listing projects")
 		click_on "Edit"
 		expect(page).to have_content("Editing project")
-		select [:Funding], from: 'Status'
+		select ("Funding"), from: "Status"
 		click_on "Update Project"
 		expect(page).to have_content("successfully updated")
+		project.reload
 		expect(project.status).to eq("Funding")
+		expect(Project.count).to eq(1)
 
 	end
 
