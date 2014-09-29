@@ -36,3 +36,20 @@ describe 'Deleting projects when user signed in' do
 		expect(Project.count).to eq(0)
 	end
 end
+
+describe "Trying to delete a project without being logged in" do
+
+	it 'does not allow you to access the destroy link' do
+		visit "/projects"
+		expect(page).to have_content("Listing projects")
+		expect(page).to have_no_content("Destroy")
+	end
+end
+
+
+
+
+
+
+
+
