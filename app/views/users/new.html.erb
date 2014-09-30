@@ -1,40 +1,40 @@
 <h1>Sign Up</h1>
 
 <%= form_for @user do |f| %>
-  <% if @user.errors.any? %>
-    <div class="error_messages">
-      <h2>Form is invalid</h2>
-      <ul>
-        <% @user.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<% if @user.errors.any? %>
+<div class="error_messages">
+  <h2>Form is invalid</h2>
+  <ul>
+    <% @user.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
 <p>
-	<%= f.label :'User Name' %>
-	<%= f.text_field :name %>
+  <%= f.label :'User Name' %>
+  <%= f.text_field :name %>
 </p>
 
 <p>
-	<%= f.label :'E-Mail' %>
-	<%= f.email_field :email %>
+  <%= f.label :'E-Mail' %>
+  <%= f.email_field :email %>
 </p>
 
 <p>
-	<%= f.label :'Phone Number' %>
-	<%= f.telephone_field :phone_number %>
+  <%= f.label :'Phone Number' %>
+  <%= f.telephone_field :phone_number %>
 </p>
 
 <p>
-	<%= f.label :Password %>
-	<%= f.password_field :password %>
+  <%= f.label :Password %>
+  <%= f.password_field :password %>
 </p>
 
- <p> 
-	 <%= f.label :password_confirmation %>
-	 <%= f.password_field :password_confirmation %>
- </p> 
- 
- <%= f.submit %>
- 	<% end %>
+<p> 
+ <%= f.label :password_confirmation %>
+ <%= f.password_field :password_confirmation %>
+</p> 
+
+<%= f.submit %>
+<% end %>

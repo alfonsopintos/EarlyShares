@@ -75,4 +75,4 @@ class ProjectsController < ApplicationController
     def project_params
       params.require(:project).permit(:status, :name)
     end
-end
+  end

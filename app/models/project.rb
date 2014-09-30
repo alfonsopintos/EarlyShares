@@ -1,71 +1,71 @@
 class Project < ActiveRecord::Base
-	require 'json'
+  require 'json'
 
-	validates :name, presence: true, length: { minimum: 3 }
+  validates :name, presence: true, length: { minimum: 3 }
 
-	after_validation :send_rabbit, :if => :status_changed? 
+  after_validation :send_rabbit, :if => :status_changed? 
 
-	belongs_to :user
+  belongs_to :user
 
 #Do not uncomment. This crashes new project form
-	# def initialize
- #   	 @errors = ActiveModel::Errors.new(self)
- #  	end
-	
-	def send_rabbit
-		if self.status == "Funding" 
-		    begin
-			    connection = Bunny.new(
-			    	:host => "tiger.cloudamqp.com", 
-			    	:vhost => "jnrczvil", 
-			    	:user => "jnrczvil", 
-			    	:password => "sIMlgcE-xekl1Fo5hEQEIApzaBtGP8tO",
-			    	:automatic_recovery => false)
-			    
-			    connection.start
-				
+  # def initialize
+ #     @errors = ActiveModel::Errors.new(self)
+ #    end
 
-			    channel = connection.create_channel
-			    queue = channel.queue("bunny", :auto_delete => true)
-			    exchange = channel.default_exchange
+ def send_rabbit
+  if self.status == "Funding" 
+    begin
+      connection = Bunny.new(
+        :host => "tiger.cloudamqp.com", 
+        :vhost => "jnrczvil", 
+        :user => "jnrczvil", 
+        :password => "sIMlgcE-xekl1Fo5hEQEIApzaBtGP8tO",
+        :automatic_recovery => false)
 
-			    queue.subscribe do |delivery_info, metadata, payload|
-			      puts "Recieved #{payload}"
-			      puts "delivery info: #{delivery_info}"
-			      puts "metadata: #{metadata}"
+      connection.start
+          
 
-			    end
+      channel = connection.create_channel
+      queue = channel.queue("bunny", :auto_delete => true)
+      exchange = channel.default_exchange
 
-			    exchange.publish(hash, :routing_key => queue.name)
+      queue.subscribe do |delivery_info, metadata, payload|
+        puts "Recieved #{payload}"
+        puts "delivery info: #{delivery_info}"
+        puts "metadata: #{metadata}"
 
-			    sleep 1.0
-		    	connection.close
+      end
 
-	    	rescue Bunny::Exception => e
+      exchange.publish(hash, :routing_key => queue.name)
 
-	    		 @errors.add(:self, "Connection Failed, Error Rescued")
+      sleep 1.0
+      connection.close
 
-				return false
-		    end	 	
-		end
-  	end
+    rescue Bunny::Exception => e
 
+     @errors.add(:self, "Connection Failed, Error Rescued")
 
-  	def hash
-  	{'header' => { 
-		ref_id: SecureRandom.uuid, 
-		client: 'es_web', 
-		timestamp: Time.now, 
-		priority: 'normal', 
-		auth_token: self.user.auth_token, 
-		event_type: 'project_status_update'},
-	'body' => {
-		user_id: self.user_id, 
-		channel: "email", 
-		user_email: self.user.email, 
-		username: self.user.name, 
-		user_mobile: self.user.phone_number}
-	}.to_json
-	end
-
+     return false
+   end   
+ end
 end
+
+
+def hash
+  {'header' => { 
+    ref_id: SecureRandom.uuid, 
+    client: 'es_web', 
+    timestamp: Time.now, 
+    priority: 'normal', 
+    auth_token: self.user.auth_token, 
+    event_type: 'project_status_update'},
+    'body' => {
+      user_id: self.user_id, 
+      channel: "email", 
+      user_email: self.user.email, 
+      username: self.user.name, 
+      user_mobile: self.user.phone_number}
+      }.to_json
+    end
+
+  end

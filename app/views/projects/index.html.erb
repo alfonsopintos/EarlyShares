@@ -12,16 +12,16 @@
 
   <tbody>
     <% @projects.each do |project| %>
-      <tr id="<%= dom_id(project) %>">
-        <td><%= project.name %></td>
-        <td><%= project.status %></td>
-        <td><%= project.user.name %></td>
-        <td><%= link_to 'Show', project %></td>
-        <% if current_user %>
-        <td><%= link_to 'Edit', edit_project_path(project) %></td>
-        <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-      </tr>
+    <tr id="<%= dom_id(project) %>">
+      <td><%= project.name %></td>
+      <td><%= project.status %></td>
+      <td><%= project.user.name %></td>
+      <td><%= link_to 'Show', project %></td>
+      <% if current_user %>
+      <td><%= link_to 'Edit', edit_project_path(project) %></td>
+      <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    </tr>
     <% end %>
   </tbody>
 </table>
