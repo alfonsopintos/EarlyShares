@@ -11,31 +11,16 @@ class Project < ActiveRecord::Base
  def send_rabbit
   if self.status == "Funding" 
     begin
-      connection = Bunny.new(
-        :host => "tiger.cloudamqp.com", 
-        :vhost => "jnrczvil", 
-        :user => "jnrczvil", 
-        :password => "sIMlgcE-xekl1Fo5hEQEIApzaBtGP8tO",
-        :automatic_recovery => false)
+      
 
-      connection.start
-          
+      # queue.subscribe do |delivery_info, metadata, payload|
+      #   puts "Recieved #{payload}"
+      #   # puts "delivery info: #{delivery_info}"
+      #   # puts "metadata: #{metadata}"
 
-      channel = connection.create_channel
-      queue = channel.queue("bunny", :auto_delete => true)
-      exchange = channel.default_exchange
+      # end
 
-      queue.subscribe do |delivery_info, metadata, payload|
-        puts "Recieved #{payload}"
-        # puts "delivery info: #{delivery_info}"
-        # puts "metadata: #{metadata}"
-
-      end
-
-      exchange.publish(hash, :routing_key => queue.name)
-
-      sleep 1.0
-      connection.close
+      BunnyExchange.publish(hash, :routing_key => BunnyQueue.name)
 
     rescue Bunny::Exception => e
 
