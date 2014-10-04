@@ -3,24 +3,23 @@ class Project < ActiveRecord::Base
 
   validates :name, presence: true, length: { minimum: 3 }
 
-  after_save :send_rabbit, :if => :status_changed? 
+  after_save :send_project_rabbit, :if => :status_changed? 
 
   belongs_to :user
 
 
- def send_rabbit
+ def send_project_rabbit
   if self.status == "Funding" 
     begin
-      
-
-      # queue.subscribe do |delivery_info, metadata, payload|
-      #   puts "Recieved #{payload}"
-      #   # puts "delivery info: #{delivery_info}"
-      #   # puts "metadata: #{metadata}"
-
-      # end
 
       BunnyExchange.publish(hash, :routing_key => BunnyQueue.name)
+
+    #   BunnyQueue.subscribe do |delivery_info, metadata, payload|
+    #   puts "Recieved #{payload}"
+    #   # puts "metadata: #{metadata}"
+
+    # end
+
 
     rescue Bunny::Exception => e
 
@@ -50,3 +49,6 @@ def hash
     end
 
   end
+
+
+  

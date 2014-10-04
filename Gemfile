@@ -44,3 +44,7 @@ gem 'rspec-rails'
 gem 'bunny'
 
 gem 'capybara'
+
+gem 'selenium-webdriver'
+
+gem "chromedriver-helper"

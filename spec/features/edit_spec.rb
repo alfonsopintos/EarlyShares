@@ -3,8 +3,11 @@ require 'rails_helper'
 describe 'Editing projects when user signed in' do
 
   before :each do
+    BunnyExchange = instance_double Bunny::Exchange
+    allow(BunnyExchange).to receive(:publish)
     User.create(:name => 'alfonso', :email => 'alfonsopintos@gmail.com', :phone_number => '1234567890', :password => '1234', :password_confirmation => '1234')
   end
+
 
   def sign_in_and_create_project(options={})
     options[:project_name] ||= "Test Create"
