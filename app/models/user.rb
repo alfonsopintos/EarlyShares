@@ -42,7 +42,7 @@ def hash
     timestamp: Time.now, 
     priority: 'normal', 
     auth_token: self.auth_token, 
-    event_type: 'Welcome New User'},
+    event_type: 'welcome_user'},
     'body' => {
       user_id: self.id, 
       channel: "email", 
